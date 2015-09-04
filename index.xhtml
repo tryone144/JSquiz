@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<!--
+ ~ JSquiz
+ ~ xhtml startpage for JQquiz
+ ~
+ ~ file: jsquiz.xhtml
+ ~ v0.9 / 2015.09.04
+ ~
+ ~ (c) 2015 Bernd Busse
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+    <title>JSquiz</title>
+    <meta charset="UTF-8" />
+    <meta name="description" content="JSquiz - JavaScript driven quiz engine" />
+    <!--<link rel="icon" type="image/png" href="jsquiz.png" />-->
+    
+    <script src="js/jquery.min.js"></script>
+    
+    <link href="jsquiz.css" type="text/css" rel="stylesheet"></link>
+    <script src="jsquiz.js" type="text/javascript"></script>
+</head>
+<body onload="jsquiz_onload()">
+    <div id="main-quiz-holder">
+        <!-- Startpage / FileSelection -->
+        <div id="intro-container">
+            <h1 id="startheader" class="header">JSquiz</h1>
+            
+            <div id="start_container" class="button_container">
+                <div class="input_wrapper">
+                    <input type="file" id="fileinput" name="fileinput" accept=".json" />
+                    <button id="btnInput">Keine Datei ausgewählt!</button>
+                </div>
+
+                <div>
+                    <button id="btnStart" disabled="">START</button>
+                </div>
+            </div>
+        </div>
+        <!-- Generate QuestionContainers here -->
+        
+        <!-- Show Results -->
+        <div id="result-container" class="questionContainer hide" style="display: none;">
+            <h1 id="resultheader" class="header">Glückwunsch</h1>
+
+            <div id="result_container">
+            </div>
+            
+            <div class="btnContainer">
+                <div class="prev">
+                    <a class="btnPrev" href="#"></a>
+                </div>
+                <div class="next">
+                    <a id="btnRetry" href="#"></a>
+                </div>
+            </div>
+            <div class="clear" />
+        </div>
+
+        <div id="progressKeeper">
+            <div id="progress" />
+        </div>
+
+        <div id="notice">
+            © 2015 Bernd Busse
+        </div>
+
+    </div>
+
+</body>
+</html>

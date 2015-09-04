@@ -1,0 +1,21 @@
+{
+    "title": "Ein Test Quiz",
+    "questions": [
+        {
+            "question": "powerline",
+            "correct": 2,
+            "answers": [
+                "Hallo",
+                "power",
+                "usappspsp"
+            ]
+        },
+        {
+            "question": "numer 2",
+            "correct": 1,
+            "answers": [
+                "Pups"
+            ]
+        }
+    ]
+}
