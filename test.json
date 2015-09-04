@@ -1,21 +1,21 @@
 {
-    "title": "Ein Test Quiz",
+    "title": "Ein Test Quizzzz",
     "questions": [
         {
-            "question": "powerline",
-            "correct": 2,
             "answers": [
                 "Hallo",
                 "power",
                 "usappspsp"
-            ]
+            ],
+            "question": "powerline",
+            "correct": 2
         },
         {
-            "question": "numer 2",
-            "correct": 1,
             "answers": [
                 "Pups"
-            ]
+            ],
+            "question": "numer 2",
+            "correct": 1
         }
     ]
 }
