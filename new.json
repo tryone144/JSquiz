@@ -1,0 +1,26 @@
+{
+    "questions": [
+        {
+            "answers": [
+                "Weil muss ja und so!"
+            ],
+            "question": "Dies ist doch eine Neue, oder?",
+            "correct": 1
+        },
+        {
+            "answers": [
+                "Hell YES!!!"
+            ],
+            "question": "Powerline",
+            "correct": 1
+        },
+        {
+            "answers": [
+                "Is Correct"
+            ],
+            "question": "New Question",
+            "correct": 1
+        }
+    ],
+    "title": ""
+}
