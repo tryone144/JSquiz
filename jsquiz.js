@@ -3,7 +3,7 @@
  * JavaScript driven Quiz Engine
  *
  * file: jsquiz.js
- * v0.9.1 / 2015.09.05
+ * v0.9.2 / 2015.09.05
  *
  * (c) 2015 Bernd Busse
  */
@@ -67,7 +67,7 @@ function genQuestionContainer(data, index, mode) {
     var teamContainer = $("<ul>");
     teamContainer.addClass("teamlist");
     if (mode == 1) {
-        teamContainer.attr("style", "visibility: hidden;");
+        teamContainer.css("visibility", "hidden");
     }
     for (i = 0; i < mode; i++) {
         var team = $("<li>");
@@ -100,6 +100,8 @@ function genQuestionContainer(data, index, mode) {
 
         var ansContainer = $("<li>");
         ansContainer.append(ansButton);
+        ansContainer.css("visibility", "hidden");
+        ansContainer.css("opacity", 0);
 
         answers.append(ansContainer);
     }
@@ -232,7 +234,7 @@ function checkAnswer(e) {
         }
 
         b.removeClass("selected");
-        b.attr("style", "cursor: default;");
+        b.css("cursor", "default");
         b.off('click');
     });
 
@@ -302,11 +304,13 @@ function startQuiz(data) {
     $('.check_button').on('click', function(e) {
         var container = $(this).parents('.questionContainer');
 
-        container.find('.btnCheck').on('click', checkAnswer);
-        container.find('.btnCheck').removeClass("disabled");
+        if (container.find('.answers li[style*=hidden]').length == 0) {
+            container.find('.btnCheck').on('click', checkAnswer);
+            container.find('.btnCheck').removeClass("disabled");
 
-        container.find('.check_button').removeClass("selected");
-        $(this).addClass("selected");
+            container.find('.check_button').removeClass("selected");
+            $(this).addClass("selected");
+        }
     });
 
     progressKeeper.fadeIn(500);
@@ -401,8 +405,6 @@ function mainHandler(evt) {
             case 32: // space
                 $('#btnStart:enabled').click();
                 break;
-            default:
-                console.log(evt);
         }
     }
 }
@@ -412,7 +414,8 @@ function quizHandler(evt) {
         $('.questionContainer:visible li:nth-child(' + index + ') button').click();
     };
 
-    if (!(evt.altKey || evt.ctrlKey || evt.metaKey || evt.shiftKey)) {
+    if (!(evt.altKey || evt.ctrlKey || evt.metaKey || evt.shiftKey) && 
+            !(evt.keyCode >= 112 && evt.keyCode <= 123)) {
         evt.preventDefault();
 
         switch (evt.keyCode) {
@@ -424,7 +427,9 @@ function quizHandler(evt) {
             case 70: // f
             case 71: // g
             case 72: // h
-                selAnswer(evt.keyCode - 64);
+                if ($('.questionContainer:visible .answers li[style*=hidden]').length == 0) {
+                    selAnswer(evt.keyCode - 64);
+                }
                 break;
             case 49: // 1
             case 50: // 2
@@ -434,15 +439,24 @@ function quizHandler(evt) {
             case 54: // 6
             case 55: // 7
             case 56: // 8
-                selAnswer(evt.keyCode - 48);
+                if ($('.questionContainer:visible .answers li[style*=hidden]').length == 0) {
+                    selAnswer(evt.keyCode - 48);
+                }
                 break;
             case 39: // right
             case 13: // return
             case 32: // space
             case 34: // pg_down
-                $('.questionContainer:visible .btnNext:visible').click();
-                $('.questionContainer:visible #btnShowResult:visible').click();
-                $('.questionContainer:visible .btnCheck:visible').click();
+                var hidden = $('.questionContainer:visible .answers li[style*=hidden]');
+                if (hidden.length > 0) {
+                    var child = hidden.first();
+                    child.css("visibility", "visible");
+                    child.fadeTo(500, 1);
+                } else {
+                    $('.questionContainer:visible .btnNext:visible').click();
+                    $('.questionContainer:visible #btnShowResult:visible').click();
+                    $('.questionContainer:visible .btnCheck:visible').click();
+                }
                 break;
             case 37: // left
             case 8:  // bspace

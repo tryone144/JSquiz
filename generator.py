@@ -4,7 +4,7 @@
 # Quiz-Generator for JSquiz
 #
 # file: generator.py
-# v0.9.1 / 2015.09.05
+# v0.9.2 / 2015.09.05
 #
 # (c) 2015 Bernd Busse
 #
@@ -169,11 +169,11 @@ def editQuestion(question, index, new=False):
     while True:
         print(" -- Edit Question #{0} -- ".format(index))
         print(" (1) Show Question")
-        print(" (2) Edit Text")
-        print(" (3) Add Answer")
-        print(" (4) Edit Answer")
-        print(" (5) Remove Answer")
-        print(" (6) Set Correct Answer")
+        print(" (3) Edit Text")
+        print(" (4) Add Answer")
+        print(" (5) Edit Answer")
+        print(" (6) Remove Answer")
+        print(" (7) Set Correct Answer")
         print(" (9) Done...")
         print(" (0) Abbort...")
 
@@ -181,7 +181,7 @@ def editQuestion(question, index, new=False):
 
         try:
             choice = promptIntInList("Select: ",
-                                     choices=(1, 2, 3, 4, 5, 6, 9, 0))
+                                     choices=(1, 3, 4, 5, 6, 7, 9, 0))
         except EOFError:
             choice = 0
 
@@ -208,7 +208,7 @@ def editQuestion(question, index, new=False):
             printQuestionSummary(question, index)
 
         # Edit Question Text
-        elif choice == 2:
+        elif choice == 3:
             print()
             try:
                 text = promptString("Enter new Question: ")
@@ -220,7 +220,7 @@ def editQuestion(question, index, new=False):
             question["question"] = text
             changed = True
         # Add new Answer
-        elif choice == 3:
+        elif choice == 4:
             print()
             last = len(question["answers"])
             pos = last + 1
@@ -235,7 +235,7 @@ def editQuestion(question, index, new=False):
             question["answers"].insert(pos - 1, ans)
             changed = True
         # Edit Answer
-        elif choice == 4:
+        elif choice == 5:
             print()
             valindex = [i for i in range(1, len(question["answers"]) + 1)]
             sel = 1
@@ -250,7 +250,7 @@ def editQuestion(question, index, new=False):
             question["answers"][sel - 1] = ans
             changed = True
         # Remove Answer
-        elif choice == 5:
+        elif choice == 6:
             print()
             valindex = [i for i in range(1, len(question["answers"]) + 1)]
             sel = 1
@@ -270,7 +270,7 @@ def editQuestion(question, index, new=False):
                 question["correct"] = 1
             changed = True
         # Set Correct Answer
-        elif choice == 6:
+        elif choice == 7:
             print()
             valindex = [i for i in range(1, len(question["answers"]) + 1)]
             sel = 1
