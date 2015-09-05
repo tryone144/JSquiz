@@ -299,6 +299,7 @@ function startQuiz(data) {
     var animateExit = function(evt) {
         progressKeeper.fadeOut(500);
         notice.fadeIn(500);
+        $(document).off('click');
         $(this).parents('.questionContainer').fadeOut(500, function() {
             intro.fadeIn(500, function() {
                 resetQuiz();
