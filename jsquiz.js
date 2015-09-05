@@ -261,6 +261,14 @@ function startQuiz(data) {
 
     $(document).off('keydown');
     $(document).on('keydown', quizHandler);
+    $(document).on('click', function(evt) {
+        var hidden = $('.questionContainer:visible .answers li[style*=hidden]');
+        if (hidden.length > 0) {
+            var child = hidden.first();
+            child.css("visibility", "visible");
+            child.fadeTo(500, 1);
+        }
+    });
 
     $('.btnPrev').on('click', function(e) {
         $(this).parents('.questionContainer').fadeOut(500, function() {
@@ -327,6 +335,7 @@ function resetQuiz(time, data) {
 
     progress.width(0);
 
+    $(document).off('keydown');
     $(document).off('keydown');
     $(document).on('keydown', mainHandler);
 }
