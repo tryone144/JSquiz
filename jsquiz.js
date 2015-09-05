@@ -451,6 +451,7 @@ function quizHandler(evt) {
                 $('.questionContainer:visible #btnExit:visible').click();
                 break;
             case 27: // escape
+                $('.questionContainer:visible').fadeOut(500);
                 $('#btnRetry:visible').click();
                 $('#btnExit').click();
                 break;
