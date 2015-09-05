@@ -1,0 +1,14 @@
+{
+    "title": "Still invalid...",
+    "mode": 1,
+    "questions": [
+        {
+            "question": "How do you do?",
+            "answers": [
+                "Best, thanks...",
+                "No, fu***"
+            ],
+            "correct": 1
+        }
+    ]
+}

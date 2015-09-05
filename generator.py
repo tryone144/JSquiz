@@ -4,7 +4,7 @@
 # Quiz-Generator for JSquiz
 #
 # file: generator.py
-# v0.9 / 2015.09.04
+# v0.9.1 / 2015.09.05
 #
 # (c) 2015 Bernd Busse
 #
@@ -134,7 +134,8 @@ def checkIntegrity(data):
 def printSummary(data, fname, extensive=False):
     print("Summary [ {0} ]:".format(fname))
     print("  Title: {0}".format(data["title"]))
-    print("  #Questions: {0}".format(len(data["questions"])))
+    print("  # Groups: {0}".format(data["mode"]))
+    print("  # Questions: {0}".format(len(data["questions"])))
 
     for i, q in enumerate(data["questions"]):
         print("    {0:2d}: {1}".format(i + 1, q["question"]))
@@ -146,7 +147,7 @@ def printSummary(data, fname, extensive=False):
 def printQuestionSummary(question, index, count=True):
     print("Question #{0}:".format(index))
     print("  Text: {0}".format(question["question"]))
-    print("  #Answers: {0}".format(len(question["answers"])))
+    print("  # Answers: {0}".format(len(question["answers"])))
     printAnswers(question, count=count, indentation=4)
 
 
@@ -286,7 +287,7 @@ def editQuestion(question, index, new=False):
 
 
 def manageQuiz(fname, create=False):
-    quizData = {'title': "", 'questions': []}
+    quizData = {'title': "", 'mode': 1, 'questions': []}
     base = os.path.basename(fname)
     changed = create
 
@@ -309,6 +310,7 @@ def manageQuiz(fname, create=False):
         print(" (4) Add Question")
         print(" (5) Edit Question")
         print(" (6) Remove Question")
+        print(" (7) Change Mode")
         print(" (9) Save...")
         print(" (0) Quit...")
 
@@ -316,7 +318,7 @@ def manageQuiz(fname, create=False):
 
         try:
             choice = promptIntInList("Select: ",
-                                     choices=(1, 2, 3, 4, 5, 6, 9, 0))
+                                     choices=(1, 2, 3, 4, 5, 6, 7, 9, 0))
         except EOFError:
             choice = 0
 
@@ -427,6 +429,19 @@ def manageQuiz(fname, create=False):
             old = quizData["questions"].pop(sel - 1)
             print("==> Deleted Question #{0} \"{1}\"".format(sel,
                                                              old["question"]))
+            changed = True
+        # Change Mode
+        elif choice == 7:
+            print()
+            sel = 1
+            try:
+                sel = promptIntInList("Group count: ", choices=(1, 2, 3, 4))
+            except EOFError:
+                print("Abborted!")
+                print()
+                continue
+            quizData["mode"] = sel
+            print("==> Set Mode to {0} Groups".format(sel))
             changed = True
 
         print()

@@ -3,7 +3,7 @@
  * JavaScript driven Quiz Engine
  *
  * file: jsquiz.js
- * v0.9 / 2015.09.04
+ * v0.9.1 / 2015.09.05
  *
  * (c) 2015 Bernd Busse
  */
@@ -12,34 +12,44 @@ var holder, intro, result,
     progressKeeper, progress,
     notice;
 
+function logErr(msg) {
+    var text = "Fehler: " + msg;
+    console.log(text);
+    alert(text);
+}
+
 function validateJson(data) {
     var valid = true;
 
     if (data.length == 0) {
-        console.log("Fehler: Datei zu kurz.");
+        logErr("Datei zu kurz.");
         valid = false;
     } else {
         if (!data.title) {
-            console.log("Fehler: Titel fehlt.");
+            logErr("Titel fehlt.");
+            valid = false;
+        }
+        if (!data.mode) {
+            logErr("Modus fehlt.");
             valid = false;
         }
 
         if (!data.questions || data.questions.length == 0) {
-            console.log("Fehler: Fragen fehlen.");
+            logErr("Fragen fehlen.");
             valid = false;
         } else {
             q = data.questions;
             for (i = 0; i < q.length; i++) {
                 if (!q[i].question) {
-                    console.log("Fehler: Frage zu Nummer " + i + " fehlt.");
+                    logErr("Frage zu Nummer " + i + " fehlt.");
                     valid = false;
                 }
                 if (!q[i].answers || q[i].answers.length == 0) {
-                    console.log("Fehler: Antworten zu Nummer " + i + " fehlen.");
+                    logErr("Antworten zu Nummer " + i + " fehlen.");
                     valid = false;
                 }
                 if (!q[i].correct || !(q[i].correct >= 1 && q[i].correct <= q[i].answers.length)) {
-                    console.log("Fehler: Richtige Antwort zu Nummer " + i + " fehlt.");
+                    logErr("Richtige Antwort zu Nummer " + i + " fehlt.");
                     valid = false;
                 }
             }
@@ -49,10 +59,28 @@ function validateJson(data) {
     return valid;
 }
 
-function genQuestionContainer(data) {
+function genQuestionContainer(data, index, mode) {
     var cont = $("<div>");
     cont.addClass("questionContainer");
     cont.addClass("hide");
+
+    var teamContainer = $("<ul>");
+    teamContainer.addClass("teamlist");
+    if (mode == 1) {
+        teamContainer.attr("style", "visibility: hidden;");
+    }
+    for (i = 0; i < mode; i++) {
+        var team = $("<li>");
+        team.addClass("team");
+        team.html("Team " + String.fromCharCode(65 + i));
+        
+        if (i == (index % mode)) {
+            team.addClass("active");
+            cont.attr("data-team", i + 1);
+        }
+        
+        teamContainer.append(team);
+    }
 
     var question = $("<div>");
     question.addClass("question");
@@ -127,12 +155,49 @@ function genQuestionContainer(data) {
     
     btnContainer.append(div);
 
+    cont.append(teamContainer);
     cont.append(question);
     cont.append(answers);
     cont.append(btnContainer);
     cont.append($("<div>").addClass("clear"));
 
     return cont;
+}
+
+function genResultTable(mode) {
+    var list = $('<table>');
+    var head = $('<tr>');
+
+    head.append($('<th>').html("Richtig"));
+    head.append($('<th>').html("Prozent"));
+    list.append(head);
+
+    if (mode == 1) {
+        var myQuestions = $('.questionContainer[data-team]');
+        var max = myQuestions.length;
+        var corr = max - myQuestions.find('.check_button.wrong').length;
+        
+        var row = $('<tr>');
+        row.append($('<td>').html(corr + " von " + max));
+        row.append($('<td>').html(Math.round(100 * corr / max) + "%"));
+        list.append(row);
+    } else {
+        head.prepend($('<th>').html("Team"));
+
+        for (d = 0; d < mode; d++) {
+            var myQuestions = $('.questionContainer[data-team=' + (d + 1) + ']');
+            var max = myQuestions.length;
+            var corr = max - myQuestions.find('.check_button.wrong').length;
+
+            var row = $('<tr>');
+            row.append($('<td>').html("Team " + String.fromCharCode(65 + d)));
+            row.append($('<td>').html(corr + " von " + max));
+            row.append($('<td>').html(Math.round(100 * corr / max) + "%"));
+            list.append(row);
+        }
+    }
+
+    return list;
 }
 
 function loadQuizFromFile(file, callback) {
@@ -145,7 +210,7 @@ function loadQuizFromFile(file, callback) {
         try {
             data = JSON.parse(e.target.result);
         } catch (err) {
-            console.log("Fehler beim Laden: " + err.message);
+            logErr("Kann Datei nicht lesen: " + err.message);
             callback(false, null);
             return;
         }
@@ -171,9 +236,10 @@ function checkAnswer(e) {
         b.off('click');
     });
 
-    $(this).hide();
-    $(this).siblings('.btnNext').show();
-    $(this).siblings('#btnShowResult').show();
+    $(this).fadeOut(250, function() {
+        $(this).siblings('.btnNext').fadeIn(250);
+        $(this).siblings('#btnShowResult').fadeIn(250);
+    });
 }
 
 function startQuiz(data) {
@@ -186,7 +252,7 @@ function startQuiz(data) {
     for (c = 0; c < q.length; c++) {
         q[c].isFirst = (c == 0);
         q[c].isLast = (c == q.length - 1);
-        cont = genQuestionContainer(q[c]);
+        cont = genQuestionContainer(q[c], c, data.mode);
         last.after(cont);
         last = cont;
     }
@@ -212,9 +278,9 @@ function startQuiz(data) {
 
     $('#btnShowResult').on('click', function(e) {
         $(this).parents('.questionContainer').fadeOut(500, function() {
-            var corr = $('.check_button.correct').length;
-            var max = q.length;
-            result.find('#result_container').html("Du hast " + corr + " von " + max + " Fragen richtig beantwortet!");
+            var table = genResultTable(data.mode);
+            result.find('#result_container').html(table);
+
             result.fadeIn(500);
             progress.animate({ width: "100%" }, 500);
         });

@@ -2,7 +2,8 @@
     "questions": [
         {
             "answers": [
-                "Weil muss ja und so!"
+                "Weil muss ja und so!",
+                "Und mehr"
             ],
             "question": "Dies ist doch eine Neue, oder?",
             "correct": 1
@@ -16,11 +17,13 @@
         },
         {
             "answers": [
-                "Is Correct"
+                "Is Correct",
+                "Or not"
             ],
             "question": "New Question",
             "correct": 1
         }
     ],
-    "title": ""
+    "title": "Title",
+    "mode": 1
 }
