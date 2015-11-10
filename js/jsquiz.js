@@ -2,8 +2,8 @@
  * JSquiz
  * JavaScript driven Quiz Engine
  *
- * file: jsquiz.js
- * v0.9.2 / 2015.09.05
+ * file: js/jsquiz.js
+ * v1.0 / 2015.11.10
  *
  * (c) 2015 Bernd Busse
  */
@@ -262,6 +262,13 @@ function startQuiz(data) {
     $(document).off('keydown');
     $(document).on('keydown', quizHandler);
     $(document).on('click', function(evt) {
+        var btns = $('.btnPrev');
+        for (n = 0; n < btns.length; n++) {
+            if (btns[n] == evt.target) {
+                return;
+            }
+        }
+
         var hidden = $('.questionContainer:visible .answers li[style*=hidden]');
         if (hidden.length > 0) {
             var child = hidden.first();

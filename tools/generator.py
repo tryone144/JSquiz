@@ -3,8 +3,8 @@
 # JSquiz
 # Quiz-Generator for JSquiz
 #
-# file: generator.py
-# v0.9.2 / 2015.09.05
+# file: tools/generator.py
+# v1.0 / 2015.09.05
 #
 # (c) 2015 Bernd Busse
 #
