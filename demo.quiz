@@ -1,0 +1,25 @@
+{
+    "questions": [
+        {
+            "correct": 3,
+            "answers": [
+                "Web Quiz",
+                "PowerQuiz",
+                "JSquiz"
+            ],
+            "question": "Wie hei\u00dft das Projekt?"
+        },
+        {
+            "correct": 2,
+            "answers": [
+                "10",
+                "beliebig viele",
+                "2^32",
+                "32"
+            ],
+            "question": "Wie viele Fragen kann man erstellen?"
+        }
+    ],
+    "title": "Demo Quiz",
+    "mode": 2
+}

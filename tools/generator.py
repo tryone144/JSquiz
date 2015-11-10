@@ -4,7 +4,7 @@
 # Quiz-Generator for JSquiz
 #
 # file: tools/generator.py
-# v1.0 / 2015.09.05
+# v1.0 / 2015.11.10
 #
 # (c) 2015 Bernd Busse
 #
@@ -457,7 +457,7 @@ def main():
         fname = ""
 
         print("Please specify a filename")
-        fname = promptFilename("New Filename: ", extension="json")
+        fname = promptFilename("New Filename: ", extension="quiz")
 
         print("==> Generating new File: \"{0}\" ...".format(fname))
         return manageQuiz(fname, create=True)
