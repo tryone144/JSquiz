@@ -1,5 +1,5 @@
-JSquiz - JavaScript driven quiz engine
-======================================
+qibean.js - JavaScript driven quiz engine
+=========================================
 
 Quiz-engine written in JavaScript.
 

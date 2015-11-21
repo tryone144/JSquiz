@@ -1,8 +1,8 @@
 /*
- * JSquiz
+ * qibean.js
  * JavaScript driven Quiz Engine
  *
- * file: js/jsquiz.js
+ * file: qibean.js
  * v1.0 / 2015.11.10
  *
  * (c) 2015 Bernd Busse
@@ -350,7 +350,7 @@ function resetQuiz(time, data) {
 
 /* onload */
 function jsquiz_onload() {
-    console.log(" === [ J S q u i z ] === ");
+    console.log(" === [ q i b e a n . j s ] === ");
 
     var fileinput = $('input[name="fileinput"]');
     var btnInput = $('#btnInput');

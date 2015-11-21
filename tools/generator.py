@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
-# JSquiz
-# Quiz-Generator for JSquiz
+# qguess.js
+# Quiz-Generator for qguess.js
 #
 # file: tools/generator.py
 # v1.0 / 2015.11.10
